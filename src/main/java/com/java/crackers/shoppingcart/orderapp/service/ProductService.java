@@ -28,7 +28,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-
+import java.util.UUID;
 
 
 @Service
@@ -53,15 +53,16 @@ public class ProductService {
             Category category = categoryRepo.findByName(name);
             if(category.getName() != null && !image.isEmpty()) {
                 String fileName = saveImagetoFile(image, productRequest);
-                Product product = Product.builder()
-                        .ProductName(productRequest.getProductName())
-                        .description(productRequest.getDescription())
-                        .orginalPrice(productRequest.getOrginalPrice())
-                        .ProductDiscount(productRequest.getProductDiscount())
-                        .ProductPrice(productRequest.getProductPrice())
-                        .image(fileName)
-                        .category(category)
-                        .build();
+                Product product = productMapper.mapToProduct(productRequest, fileName, category);
+//                Product product = Product.builder()
+//                        .ProductName(productRequest.getProductName())
+//                        .description(productRequest.getDescription())
+//                        .orginalPrice(productRequest.getOrginalPrice())
+//                        .ProductDiscount(productRequest.getProductDiscount())
+//                        .ProductPrice(productRequest.getProductPrice())
+//                        .image(fileName)
+//                        .category(category)
+//                        .build();
 
                 productRepo.save(product);
                 return ResponseEntity.ok("Product Saved Successfully");
@@ -119,4 +120,21 @@ public class ProductService {
         List<Product> product = productRepo.sortByProductPrice(category.getId());
         return product.stream().map((p) -> productMapper.mapToproductResponse(p)).toList();
     }
+
+    public ResponseEntity<String> deleteProduct(UUID productId) {
+        if(productRepo.findById(productId) == null) {
+            return ResponseEntity.notFound().build();
+        }
+        productRepo.deleteById(productId);
+        return ResponseEntity.ok().body("Selected Item Deleted Successfully");
+    }
+
+//    public ResponseEntity<String> updateProduct(UUID productId, ProductRequest productRequest) {
+//        Product product = productRepo.findById(productId).orElseThrow();
+//        if(product.getProductId() == null) {
+//            return ResponseEntity.badRequest().body("cannot update the product, choosed product is null");
+//        }
+//
+//
+//    }
 }

@@ -10,6 +10,7 @@ import com.java.crackers.shoppingcart.orderapp.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,21 +27,27 @@ public class CategoryController {
     @Autowired
     private final ProductService productService;
 
-    @GetMapping("check")
+    @GetMapping("/admin/check")
+    @PreAuthorize("hasRole('ADMIN')")
     public String ApiChecking() {
         return "API Working fine as expected";
     }
 
     @GetMapping("/category")
-    public List<CategoryResponse> fetchAllProduct() {
+    public List<CategoryResponse> fetchAllCategory() {
         return categoryService.getAllcategories();
     }
 
 
-    //Store category items
-    @PostMapping("/store/category")
+    //Store category items - Admin
+    @PostMapping("/admin/store/category")
     public ResponseEntity<String> storeCategory(@RequestPart CategoryRequest categoryRequest, @RequestPart("image") MultipartFile image) {
         return categoryService.createCategory(categoryRequest, image);
+    }
+
+    @DeleteMapping("/admin/category/delete/{id}")
+    public ResponseEntity<String> deleteCategoryById(@PathVariable long id) {
+        return categoryService.deleteCategory(id);
     }
 
 
@@ -55,4 +62,6 @@ public class CategoryController {
     public List<CategoryResponse> searchByCategory(@RequestParam String name) {
         return categoryService.searchBycategories(name);
     }
+
+
 }

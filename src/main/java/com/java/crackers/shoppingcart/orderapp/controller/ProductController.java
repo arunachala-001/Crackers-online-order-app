@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/product")
@@ -24,7 +25,7 @@ public class ProductController {
     private final ProductService productService;
 
     //Store products
-    @PostMapping("/store/{name}")
+    @PostMapping("/admin/store/{name}")
     public ResponseEntity<String> storeProducts(@PathVariable String name,
                                                 @RequestPart ProductRequest productRequest,
                                                 @RequestPart MultipartFile image) {
@@ -40,4 +41,14 @@ public class ProductController {
     public List<ProductResponse> sortByprice(@PathVariable long id) {
         return productService.sortByPrice(id);
     }
+
+    @DeleteMapping("/admin/product/delete/{productId}")
+    public ResponseEntity<String> deleteProductById(@PathVariable UUID productId) {
+        return productService.deleteProduct(productId);
+    }
+
+//    @PutMapping("/admin/product/update/{id}")
+//    public ResponseEntity<String> updateProductById(@PathVariable UUID productId, @RequestBody ProductRequest productRequest) {
+//        return productService.updateProduct(productId, productRequest);
+//    }
 }

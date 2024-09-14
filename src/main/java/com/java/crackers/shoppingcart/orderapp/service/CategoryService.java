@@ -100,4 +100,12 @@ public class CategoryService {
         List<Category> category = categoryRepo.findByNameContainingIgnoreCase(name);
         return category.stream().map(this::mapTocategoryResponse).toList();
     }
+
+    public ResponseEntity<String> deleteCategory(long id) {
+        if(categoryRepo.findById(id) == null) {
+            return ResponseEntity.notFound().build();
+        }
+        categoryRepo.deleteById(id);
+        return ResponseEntity.ok().body("Category Item deleted successfully");
+    }
 }

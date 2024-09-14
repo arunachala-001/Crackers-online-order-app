@@ -11,13 +11,19 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderRequest {
+public class InvoiceRequest {
+    private UUID customerId;
+    private String firstName;
+    private String lastName;
+    private String mobileNumber;
+    private String address;
+    private long pinCode;
+    private String emailId;
 
-    private String productName;
     private UUID productId;
+    private String productName;
     private int quantity;
-    private int productPrice;
-    private int orginalPrice;
-    private String description;
-    private int productDiscount;
+    private int price;
+
+
 }

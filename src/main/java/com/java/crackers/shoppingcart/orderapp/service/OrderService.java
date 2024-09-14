@@ -11,6 +11,8 @@ import com.java.crackers.shoppingcart.orderapp.repository.OrderRepository;
 import com.java.crackers.shoppingcart.orderapp.repository.ProductRepository;
 import com.java.crackers.shoppingcart.orderapp.request.CustomerRequest;
 import com.java.crackers.shoppingcart.orderapp.request.OrderRequest;
+import com.java.crackers.shoppingcart.orderapp.response.OrderResponse;
+import com.java.crackers.shoppingcart.orderapp.response.OrderTable;
 import com.java.crackers.shoppingcart.orderapp.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -42,12 +45,13 @@ public class OrderService {
         return productMapper.mapToproductResponse(product);
     }
 
-    public ResponseEntity<String> saveOrder(UUID id, OrderRequest orderRequest) {
+    public ResponseEntity<String> saveOrder(UUID id, int quantity, List<OrderRequest> orderRequest) {
         try {
             Customer customer = customerRepo.findById(id).orElseThrow();
             if(customer.getId() != null) {
-                OrderedProduct orderedProduct = orderMapper.mapToOrderedProduct(orderRequest,customer);
-                orderRepo.save(orderedProduct);
+                List<OrderedProduct> orderedProduct = orderMapper.mapToOrderedProduct(orderRequest,customer, quantity);
+                orderedProduct.stream()
+                        .map(orderRepo::save);
                 return ResponseEntity.ok("Order Placed Successfully");
             } else {
                 return ResponseEntity.notFound().build();
@@ -64,10 +68,29 @@ public class OrderService {
         try {
             Customer customer = customerMapper.mapToCustomer(customerRequest);
             customerRepo.save(customer);
-            return ResponseEntity.ok("User added successfully");
+            return ResponseEntity.ok("User added successfully, your ID:"+ customer.getId());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Can't save user");
         }
     }
 
+
+    //For User
+    public List<OrderResponse> getOrderDetailsByCustId(UUID customerId) {
+        try {
+            Customer customer = customerRepo.findById(customerId).orElseThrow();
+            return customer.getOrderedProductList().stream()
+                    .map(o -> orderMapper.mapToOrderedResponse(o)).toList();
+        }
+        catch (IllegalArgumentException e) {
+            return null;
+        }
+    }
+
+    //For Admin
+    public List<OrderTable> getAllOrderDetails() {
+       List<OrderedProduct> orderedProductList = orderRepo.findAll();
+       return orderedProductList.stream()
+               .map(o -> orderMapper.mapToOrderTable(o)).toList();
+    }
 }

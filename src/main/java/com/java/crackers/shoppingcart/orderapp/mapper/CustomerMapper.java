@@ -15,6 +15,7 @@ public class CustomerMapper {
                 .emailAddress(customerRequest.getEmailAddress())
                 .address(customerRequest.getAddress())
                 .phoneNumber(customerRequest.getPhoneNumber())
+                .pinCode(customerRequest.getPinCode())
                 .build();
     }
 }

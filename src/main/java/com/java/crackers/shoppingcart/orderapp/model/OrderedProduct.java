@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -30,6 +31,8 @@ public class OrderedProduct {
     @Column(name = "price")
     private int productPrice;
 
+    private int quantity;
+
     @Column(name = "orginal_price")
     private int orginalPrice;
 
@@ -38,9 +41,21 @@ public class OrderedProduct {
     @Column(name = "discount")
     private int productDiscount;
 
+    private int total;
+
+    private String status;
+
+    @Column(name = "created_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date orderedDate;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
     @JsonIgnore
     private Customer customer;
+
+    @PrePersist
+    protected void onCreate() {
+        orderedDate=new Date();
+    }
 }

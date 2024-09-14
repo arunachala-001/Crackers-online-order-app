@@ -1,7 +1,9 @@
 package com.java.crackers.shoppingcart.orderapp.mapper;
 
 
+import com.java.crackers.shoppingcart.orderapp.model.Category;
 import com.java.crackers.shoppingcart.orderapp.model.Product;
+import com.java.crackers.shoppingcart.orderapp.request.ProductRequest;
 import com.java.crackers.shoppingcart.orderapp.response.ProductResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -29,4 +31,17 @@ public class ProductMapper {
                 .image(p.getImage())
                 .category(p.getCategory()).build();
     }
+
+    public Product mapToProduct(ProductRequest productRequest, String fileName, Category category) {
+        return Product.builder()
+                .ProductName(productRequest.getProductName())
+                .description(productRequest.getDescription())
+                .orginalPrice(productRequest.getOrginalPrice())
+                .ProductDiscount(productRequest.getProductDiscount())
+                .ProductPrice(productRequest.getProductPrice())
+                .image(fileName)
+                .category(category)
+                .build();
+    }
+
 }
