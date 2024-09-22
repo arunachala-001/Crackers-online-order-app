@@ -2,6 +2,7 @@ package com.java.crackers.shoppingcart.orderapp.controller;
 
 import com.java.crackers.shoppingcart.orderapp.model.Product;
 import com.java.crackers.shoppingcart.orderapp.request.OrderRequest;
+import com.java.crackers.shoppingcart.orderapp.response.CustomerResponse;
 import com.java.crackers.shoppingcart.orderapp.response.OrderResponse;
 import com.java.crackers.shoppingcart.orderapp.response.OrderTable;
 import com.java.crackers.shoppingcart.orderapp.response.ProductResponse;
@@ -21,17 +22,23 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    //List Products after clicking Order btn
+//    List Products after clicking Order btn
     @GetMapping("/product/{id}")
     public ProductResponse getProductsByIdForOrder(@PathVariable UUID id) {
         return orderService.getProductsById(id);
     }
 
+    @PostMapping("/product")
+    public List<ProductResponse> getProductsByIdsForOrder(@RequestBody List<UUID> id) {
+        System.out.println(id == null);
+        return orderService.getListOfProductsById(id);
+    }
+
     // Place Order
-    @PostMapping("/product/place-order/{id}/{quantity}")
-    public ResponseEntity<String> placeOrder(@PathVariable UUID id, @PathVariable int quantity,
-                                                          @RequestBody List<OrderRequest> orderRequest) {
-        return orderService.saveOrder(id,quantity, orderRequest);
+    @PostMapping("/product/place-order/{id}")
+    public ResponseEntity<String> placeOrder(@PathVariable UUID id,@RequestBody List<OrderRequest> orderRequest) {
+        orderRequest.stream().forEach(System.out::println);
+        return orderService.saveOrder(id,orderRequest);
     }
 
     //Cart Page
@@ -40,9 +47,11 @@ public class OrderController {
         return orderService.getOrderDetailsByCustId(customerId);
     }
 
-    //Admin view
-    @GetMapping("/admin/007")
-    public List<OrderTable> fetchAllOrderDetails() {
-        return orderService.getAllOrderDetails();
+    @GetMapping("/history/{email}")
+    public List<CustomerResponse> fetchOrderDetailsByCustEmail(@PathVariable String email) {
+        return orderService.fetchOrdersByEmailId(email);
     }
+
+    //Admin view
+
 }

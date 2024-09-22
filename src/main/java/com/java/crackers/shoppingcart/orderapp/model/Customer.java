@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -38,6 +37,11 @@ public class Customer {
 
     @Column(name = "pincode")
     private long pinCode;
+
+    @Column(name = "order_status")
+    private String orderStatus;
+//    @Lob
+//    private Blob invoice;
 
     @OneToMany(mappedBy = "customer")
     @JsonIgnore

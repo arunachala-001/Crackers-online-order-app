@@ -21,7 +21,8 @@ public class CrackersOrderAppApplication {
 				registry.addMapping("/**")
 						.allowedOrigins("http://localhost:3000/")
 						.allowedHeaders("*")
-						.allowedMethods("*");
+						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+						.allowCredentials(true);
 			}
 		};
 	}

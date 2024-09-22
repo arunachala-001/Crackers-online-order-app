@@ -24,13 +24,7 @@ public class ProductController {
     @Autowired
     private final ProductService productService;
 
-    //Store products
-    @PostMapping("/admin/store/{name}")
-    public ResponseEntity<String> storeProducts(@PathVariable String name,
-                                                @RequestPart ProductRequest productRequest,
-                                                @RequestPart MultipartFile image) {
-        return productService.createProduct(name, productRequest, image);
-    }
+
 
     @GetMapping("/{id}")
     public List<ProductResponse> fetchAllProductsByCategoryId(@PathVariable long id) {
@@ -42,13 +36,5 @@ public class ProductController {
         return productService.sortByPrice(id);
     }
 
-    @DeleteMapping("/admin/product/delete/{productId}")
-    public ResponseEntity<String> deleteProductById(@PathVariable UUID productId) {
-        return productService.deleteProduct(productId);
-    }
 
-//    @PutMapping("/admin/product/update/{id}")
-//    public ResponseEntity<String> updateProductById(@PathVariable UUID productId, @RequestBody ProductRequest productRequest) {
-//        return productService.updateProduct(productId, productRequest);
-//    }
 }

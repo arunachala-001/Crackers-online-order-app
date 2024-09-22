@@ -16,6 +16,7 @@ public class CustomerMapper {
                 .address(customerRequest.getAddress())
                 .phoneNumber(customerRequest.getPhoneNumber())
                 .pinCode(customerRequest.getPinCode())
+                .orderStatus(customerRequest.getOrderStatus())
                 .build();
     }
 }

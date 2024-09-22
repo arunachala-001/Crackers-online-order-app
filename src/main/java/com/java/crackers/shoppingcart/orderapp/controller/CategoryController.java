@@ -27,29 +27,15 @@ public class CategoryController {
     @Autowired
     private final ProductService productService;
 
-    @GetMapping("/admin/check")
-    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/check")
     public String ApiChecking() {
-        return "API Working fine as expected";
+        return "API Working fine as expected - kadavuley";
     }
 
     @GetMapping("/category")
     public List<CategoryResponse> fetchAllCategory() {
         return categoryService.getAllcategories();
     }
-
-
-    //Store category items - Admin
-    @PostMapping("/admin/store/category")
-    public ResponseEntity<String> storeCategory(@RequestPart CategoryRequest categoryRequest, @RequestPart("image") MultipartFile image) {
-        return categoryService.createCategory(categoryRequest, image);
-    }
-
-    @DeleteMapping("/admin/category/delete/{id}")
-    public ResponseEntity<String> deleteCategoryById(@PathVariable long id) {
-        return categoryService.deleteCategory(id);
-    }
-
 
     //Get category by CategoryName
     @GetMapping("/category/{name}")

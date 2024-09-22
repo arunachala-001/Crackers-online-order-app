@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -13,13 +14,18 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 public class OrderTable {
-//    private UUID orderId;
-    private String customerName;
-    private String address;
-    private String productName;
-    private int quantity;
-    private int price;
-    private int total;
-    private Date createdDate;
+
+
+////    private UUID orderId;
+//    private UUID customerId;
+//    private String customerName;
+//    private String address;
+////    private String productName;
+////    private int quantity;
+////    private int price;
+////    private int total;
+////    private Date createdDate;
     private String status;
+//
+//    List<OrderResponse> orderResponseList;
 }

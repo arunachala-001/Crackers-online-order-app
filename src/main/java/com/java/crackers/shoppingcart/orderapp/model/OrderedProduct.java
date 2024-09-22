@@ -43,7 +43,7 @@ public class OrderedProduct {
 
     private int total;
 
-    private String status;
+//    private String status;
 
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)

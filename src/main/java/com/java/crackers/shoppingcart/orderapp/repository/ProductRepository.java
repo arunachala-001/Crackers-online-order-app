@@ -13,4 +13,6 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
 //    SubProduct findBySubProductsName(String name);
     @Query("SELECT p FROM Product p WHERE p.category.id = :categoryId ORDER BY p.ProductPrice")
     List<Product> sortByProductPrice(@Param("categoryId") long categoryId);
+
+
 }

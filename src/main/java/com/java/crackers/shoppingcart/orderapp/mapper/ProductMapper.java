@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 import java.nio.file.Paths;
+import java.util.List;
 
 @Configuration
 public class ProductMapper {
@@ -44,4 +45,7 @@ public class ProductMapper {
                 .build();
     }
 
+//    public List<ProductResponse> mapToListOfProductRespone(List<Product> p) {
+//        return p
+//    }
 }
