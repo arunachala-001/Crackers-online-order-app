@@ -56,6 +56,7 @@ public class InvoiceService {
         table.addHeaderCell("Product Name").setBold().setTextAlignment(TextAlignment.CENTER);
         table.addHeaderCell("Quantity(no)").setBold().setTextAlignment(TextAlignment.CENTER);
         table.addHeaderCell("Product Price(RS)").setBold().setTextAlignment(TextAlignment.CENTER);
+        table.addHeaderCell("Date(RS)").setBold().setTextAlignment(TextAlignment.CENTER);
         table.addHeaderCell("Total(Rs)").setBold().setTextAlignment(TextAlignment.CENTER);
 
         List<OrderedProduct> productList = invoiceRequest.getListofProducts();
@@ -67,10 +68,12 @@ public class InvoiceService {
             table.addCell((String.format(String.valueOf(ip.getQuantity())))).setTextAlignment(TextAlignment.CENTER);
             table.addCell(String.format(String.valueOf(ip.getProductPrice()))).setTextAlignment(TextAlignment.CENTER);
             table.addCell(String.format(String.valueOf(ip.getProductPrice()*ip.getQuantity()))).setTextAlignment(TextAlignment.CENTER);
+            table.addCell(String.format(String.valueOf(ip.getOrderedDate()))).setTextAlignment(TextAlignment.CENTER);
 
             totalPrice+=ip.getProductPrice()*ip.getQuantity();
         }
         table.addFooterCell("All Total");
+        table.addFooterCell("");
         table.addFooterCell("");
         table.addFooterCell("");
         table.addFooterCell("");
