@@ -19,7 +19,7 @@ public class CrackersOrderAppApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-						.allowedOrigins("http://localhost:3000/")
+						.allowedOrigins("https://sivakasi-crackers.onrender.com/")
 						.allowedHeaders("*")
 						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
 						.allowCredentials(true);
