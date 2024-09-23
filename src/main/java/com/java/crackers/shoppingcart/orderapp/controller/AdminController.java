@@ -26,7 +26,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://sivakasi-crackers.onrender.com")
 public class AdminController {
 
     @Autowired
