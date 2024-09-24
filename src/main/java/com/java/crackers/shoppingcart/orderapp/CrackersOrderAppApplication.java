@@ -13,7 +13,6 @@ public class CrackersOrderAppApplication {
 		SpringApplication.run(CrackersOrderAppApplication.class, args);
 	}
 
-	//Production change
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
