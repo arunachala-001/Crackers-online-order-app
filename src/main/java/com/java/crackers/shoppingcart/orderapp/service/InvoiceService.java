@@ -49,14 +49,14 @@ public class InvoiceService {
         document.add(new Paragraph("Address     : "+ invoiceRequest.getAddress()+" - "+invoiceRequest.getPinCode()));
         document.add(new Paragraph("\n"));
 
-        float[] columnWidths = {100F,100F,100F,100F, 100F};
+        float[] columnWidths = {50F,100F,50F,70F, 100F, 70F};
         Table table = new Table(UnitValue.createPercentArray(columnWidths));
 
         table.addHeaderCell("S.NO").setBold().setTextAlignment(TextAlignment.CENTER);
-        table.addHeaderCell("Product Name").setBold().setTextAlignment(TextAlignment.CENTER);
-        table.addHeaderCell("Quantity(no)").setBold().setTextAlignment(TextAlignment.CENTER);
-        table.addHeaderCell("Product Price(RS)").setBold().setTextAlignment(TextAlignment.CENTER);
-        table.addHeaderCell("Date(RS)").setBold().setTextAlignment(TextAlignment.CENTER);
+        table.addHeaderCell("Product").setBold().setTextAlignment(TextAlignment.CENTER);
+        table.addHeaderCell("Quantity(n)").setBold().setTextAlignment(TextAlignment.CENTER);
+        table.addHeaderCell("Price(RS)").setBold().setTextAlignment(TextAlignment.CENTER);
+        table.addHeaderCell("Date").setBold().setTextAlignment(TextAlignment.CENTER);
         table.addHeaderCell("Total(Rs)").setBold().setTextAlignment(TextAlignment.CENTER);
 
         List<OrderedProduct> productList = invoiceRequest.getListofProducts();
@@ -67,8 +67,9 @@ public class InvoiceService {
             table.addCell(ip.getProductName()).setTextAlignment(TextAlignment.CENTER);
             table.addCell((String.format(String.valueOf(ip.getQuantity())))).setTextAlignment(TextAlignment.CENTER);
             table.addCell(String.format(String.valueOf(ip.getProductPrice()))).setTextAlignment(TextAlignment.CENTER);
-            table.addCell(String.format(String.valueOf(ip.getProductPrice()*ip.getQuantity()))).setTextAlignment(TextAlignment.CENTER);
             table.addCell(String.format(String.valueOf(ip.getOrderedDate()))).setTextAlignment(TextAlignment.CENTER);
+            table.addCell(String.format(String.valueOf(ip.getProductPrice()*ip.getQuantity()))).setTextAlignment(TextAlignment.CENTER);
+            
 
             totalPrice+=ip.getProductPrice()*ip.getQuantity();
         }
